@@ -10,9 +10,49 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarTest();
+            // CarTest();
             // BrandTest();
+            // RentalTest();
+            // RentalDateTest();
+        }
 
+        private static void RentalDateTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.GetAll();
+
+            if (result.Success)
+            {
+                foreach (var rent in result.Data)
+                {
+                    Console.WriteLine("Araç kiralama Tarihi : " + rent.RentDate);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Add(new Rental
+            {
+                CarId = 1,
+                CustomerId = 1,
+                RentDate = new DateTime(2021, 02, 26),
+                ReturnDate = new DateTime(2021, 03, 13)
+            });
+
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void BrandTest()
@@ -41,8 +81,6 @@ namespace ConsoleUI
             {
                 Console.WriteLine(result.Message);
             }
-
-            
         }
     }
 }
